@@ -1,0 +1,192 @@
+<div class="container text-center mt-4">
+    <div class="row mb-3">
+        <div class="col">
+            <nav class="navbar navbar-expand-lg custom-navbar rounded shadow-sm px-3 py-2">
+                <div class="container-fluid">
+                    <a class="navbar-brand fw-bold text-white fs-4" href="#">🩺 AgendeMed</a>
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-link text-white px-3" href="/">Cadastrar</a>
+                            <a class="nav-link text-white px-3 active fw-semibold" href="/consulta">Consultar</a>
+
+                            <div class="form-check form-switch ms-3 mt-1">
+                                <input class="form-check-input" type="checkbox" id="modoNoturno" onclick="alternarModo()">
+                                <label class="form-check-label text-white" for="modoNoturno">🌙</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col bg-white p-4 rounded shadow">
+            <h4 class="text-start mb-2">Consultar - Agendamento dos Pacientes</h4>
+            <p class="text-start text-muted">Sistema utilizado para agendar consultas médicas.</p>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-primary text-center">
+                        <tr>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Origem</th>
+                            <th>Como ficou sabendo</th>
+                            <th>Tipo de Consulta</th>
+                            <th>Data</th>
+                            <th>Hora</th>
+                            <th>Observação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each posts}}
+                        <tr>
+                            <td>{{nome}}</td>
+                            <td>{{email}}</td>
+                            <td>{{telefone}}</td>
+                            <td>{{origem}}</td>
+                            <td>{{saber}}</td>
+                            <td>{{tipo_consulta}}</td>
+                            <td>{{data_consulta}}</td>
+                            <td>{{hora_consulta}}</td>
+                            <td>{{observacao}}</td>
+                            <td>
+                                <a href="/editar/{{id}}" class="btn btn-sm custom-button2">Editar</a>
+                                <a href="/excluir/{{id}}" class="btn btn-sm custom-button3"
+                                    onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function alternarModo() {
+        const escuro = document.body.classList.toggle("modo-escuro");
+        localStorage.setItem("modo", escuro ? "escuro" : "claro");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        if (localStorage.getItem("modo") === "escuro") {
+            document.body.classList.add("modo-escuro");
+            document.getElementById("modoNoturno").checked = true;
+        }
+    });
+</script>
+
+<style>
+     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+
+  body {
+    background-color: #f2f6fc;
+    font-family: "Poppins", sans-serif;
+  }
+
+    .custom-navbar {
+        background: linear-gradient(90deg, #61b8d8, #4aa3c2);
+    }
+
+    .custom-navbar .nav-link {
+        color: #f0f0f0 !important;
+        transition: background 0.3s, color 0.3s;
+        border-radius: 4px;
+        margin: 0 4px;
+    }
+
+    .custom-navbar .nav-link:hover,
+    .custom-navbar .nav-link.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white !important;
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    .custom-button {
+        background-color: #96d7eb !important;
+        color: white;
+    }
+
+    .custom-button2 {
+        background-color: #5191c1 !important;
+        color: white;
+    }
+
+    .custom-button3 {
+        background-color: #ec6349 !important;
+        color: white;
+    }
+
+    table th,
+    table td {
+        vertical-align: middle;
+    }
+
+    .table-responsive {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* DARK MODE */
+    body.modo-escuro {
+        background-color: #121212;
+        color: #f0f0f0;
+    }
+
+    body.modo-escuro .bg-white {
+        background: #1e1e1e !important;
+        color: #f0f0f0;
+    }
+
+    body.modo-escuro .text-muted {
+    color: #f0f0f0 !important;
+    }
+    
+    body.modo-escuro .custom-navbar {
+        background: linear-gradient(90deg, #2f6a7e, #235564);
+    }
+
+    body.modo-escuro .nav-link {
+        color: #ccc !important;
+    }
+
+    body.modo-escuro .table {
+        background-color: #222;
+        color: #f0f0f0;
+    }
+
+    body.modo-escuro .table th {
+        background-color: #333 !important;
+        color: #eee;
+    }
+
+    body.modo-escuro .table td {
+        background-color: #1c1c1c;
+        color: #f0f0f0;
+    }
+
+    body.modo-escuro .custom-button2 {
+        background-color: #3d7ca3 !important;
+    }
+
+    body.modo-escuro .custom-button3 {
+        background-color: #c94f3f !important;
+    }
+</style>
